@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Médico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .contenido { white-space: pre-line; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Página de Login -->
+    <div id="loginPage">
+        <nav class="bg-blue-600 p-4">
+            <div class="container mx-auto">
+                <h1 class="text-white text-2xl font-bold">SISTEMA MÉDICO</h1>
+            </div>
+        </nav>
+
+        <div class="container mx-auto p-8">
+            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Usuario</label>
+                        <input type="text" id="username" required class="w-full p-2 border rounded">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Contraseña</label>
+                        <input type="password" id="password" required class="w-full p-2 border rounded">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">
+                        Ingresar al Sistema
+                    </button>
+                </form>
+                <div class="mt-4 text-sm text-gray-600">
+                    <p class="font-bold">Usuarios disponibles:</p>
+                    <ul class="list-disc pl-5 mt-2">
+                        <li>Supervisor: admin / admin123</li>
+                        <li>Doctor: doctor / doctor123</li>
+                        <li>Paciente: paciente / paciente123</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="mainSystem" class="hidden">
+        <nav class="bg-blue-600 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-white text-2xl font-bold">SISTEMA MÉDICO</h1>
+                <div class="flex items-center space-x-4">
+                    <span id="userDisplay" class="text-white font-bold"></span>
+                    <button onclick="logout()" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Panel Supervisor -->
+        <div id="supervisorPanel" class="container mx-auto p-8 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">PANEL DEL SUPERVISOR (ADMINISTRADOR)</h2>
+                    <div class="contenido">
+ESTADÍSTICAS GENERALES:
+- Total de Pacientes: 245
+- Citas del Día: 28
+- Doctores Activos: 12
+- Ingresos del Mes: $15,680
+
+ACCIONES DISPONIBLES:
+- Gestionar Personal Médico
+- Ver Reportes Financieros
+- Configuración del Sistema
+- Ver Estadísticas
+- Administrar Horarios
+- Gestionar Especialidades
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">Gestión del Sistema</h2>
+                    <div class="space-y-4">
+                        <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                            Gestionar Personal
+                        </button>
+                        <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                            Ver Reportes
+                        </button>
+                        <button class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                            Configuración
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Doctor -->
+        <div id="doctorPanel" class="container mx-auto p-8 hidden">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">PANEL DEL DOCTOR</h2>
+                <div class="contenido">
+AGENDA DEL DÍA:
+09:00 AM - Juan Pérez
+- Motivo: Control mensual
+- Historia Clínica: #12345
+- Estado: Pendiente
+- Acciones: Atender | Ver Historial
+
+10:30 AM - María López
+- Motivo: Consulta general
+- Historia Clínica: #12346
+- Estado: Pendiente
+- Acciones: Atender | Ver Historial
+
+RESUMEN DEL DÍA:
+- Total Citas: 8
+- Atendidos: 2
+- Pendientes: 6
+                </div>
+                <div class="mt-4 space-x-2">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Atender Paciente
+                    </button>
+                    <button class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                        Ver Historial
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Paciente -->
+        <div id="pacientePanel" class="container mx-auto p-8 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">PANEL DEL PACIENTE</h2>
+                    <div class="contenido">
+AGENDAR NUEVA CITA:
+Especialidades Disponibles:
+- Medicina General ($50)
+- Cardiología ($80)
+- Pediatría ($80)
+- Dermatología ($80)
+- Traumatología ($80)
+
+Horarios Disponibles:
+- 09:00 AM
+- 10:00 AM
+- 11:00 AM
+- 12:00 PM
+- 03:00 PM
+- 04:00 PM
+                    </div>
+                    <form class="mt-4 space-y-4">
+                        <div>
+                            <label class="block mb-2">Seleccione Especialidad</label>
+                            <select class="w-full p-2 border rounded">
+                                <option>Medicina General</option>
+                                <option>Cardiología</option>
+                                <option>Pediatría</option>
+                                <option>Dermatología</option>
+                                <option>Traumatología</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-2">Fecha</label>
+                            <input type="date" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block mb-2">Hora</label>
+                            <select class="w-full p-2 border rounded">
+                                <option>09:00 AM</option>
+                                <option>10:00 AM</option>
+                                <option>11:00 AM</option>
+                                <option>12:00 PM</option>
+                                <option>03:00 PM</option>
+                                <option>04:00 PM</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                            Reservar Cita
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-xl font-bold mb-4">Mis Citas Programadas</h2>
+                    <div class="contenido">
+MIS CITAS:
+1. Dr. García - Medicina General
+   Fecha: 15/11/2024
+   Hora: 09:00 AM
+   Estado: Confirmada
+
+2. Dra. Rodríguez - Cardiología
+   Fecha: 20/11/2024
+   Hora: 10:30 AM
+   Estado: Pendiente
+
+HORARIOS DE ATENCIÓN:
+Lunes a Viernes: 08:00 AM - 06:00 PM
+Sábados: 08:00 AM - 01:00 PM
+Domingos: Solo emergencias
+
+CONTACTO DE EMERGENCIA:
+Teléfono: (555) 123-4567
+Emergencias: (555) 911-1234
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Usuarios del sistema
+        const users = {
+            'admin': { password: 'admin123', role: 'supervisor', name: 'Administrador' },
+            'doctor': { password: 'doctor123', role: 'doctor', name: 'Dr. González' },
+            'paciente': { password: 'paciente123', role: 'paciente', name: 'Juan Pérez' }
+        };
+
+        // Manejo del login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username].password === password) {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainSystem').classList.remove('hidden');
+                document.getElementById('userDisplay').textContent = users[username].name;
+
+                const role = users[username].role;
+                document.getElementById('supervisorPanel').classList.add('hidden');
+                document.getElementById('doctorPanel').classList.add('hidden');
+                document.getElementById('pacientePanel').classList.add('hidden');
+                document.getElementById(`${role}Panel`).classList.remove('hidden');
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+
+        // Función de logout
+        function logout() {
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('mainSystem').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+        }
+    </script>
+</body>
+</html>
